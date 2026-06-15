@@ -1,0 +1,11 @@
+INSERT INTO "ContractDetails" VALUES ('9bf9bd0c-f575-438d-a727-47b40966b197', 'Bases Permanentes de Contratación para los Servicios de Importación', false, false);
+INSERT INTO "ContractDetails" VALUES ('d62152ca-ec64-4f28-b201-3eaa3c51d965', 'Bases Permanentes de Contratación para la Compraventa Internacional de Combustibles', false, false);
+INSERT INTO "ContractDetails" VALUES ('b760150c-af48-48a5-bc1b-37fb6c2fb582', 'Contrato Específico de Prestación de Servicios de Importación', true, false);
+INSERT INTO "ContractDetails" VALUES ('c13a3495-807b-4865-8229-b74e7e08ee92', 'Contrato de Compraventa Internacional', true, false);
+INSERT INTO "ContractDetails" VALUES ('dfe1ccbb-c2ec-412d-8238-424a71f85a31', 'Contrato de Comisión para la Venta de Mercancías en Consignación', true, true);
+INSERT INTO "ContractDetails" VALUES ('c3b8402d-e497-4dc3-9115-dcb6268e4d50', 'Contrato de Comisión', false, false);
+INSERT INTO "ContractDetails" VALUES ('44ece276-4510-43c0-9a86-e8cd559b8d20', 'Servicios de Aduana', false, false);
+INSERT INTO "ContractDetails" VALUES ('1daaedfd-b6c0-422d-ad7b-79117daa109f', 'Servicios Portuarios', false, false);
+INSERT INTO "ContractDetails" VALUES ('ff07aebe-3b39-485e-8813-638e94066c92', 'Servicios de Supervisión', false, false);
+INSERT INTO "ContractDetails" VALUES ('49e598c1-c2a6-4179-85e7-2398263fbe65', 'Compraventa Nacional', false, false);
+INSERT INTO "ContractDetails" VALUES ('b96569f3-712a-4370-b7f1-f72402ff64ab', 'Servicios para Aplicaciones Informáticas', false, false);

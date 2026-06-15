@@ -1,16 +1,73 @@
-import Layout from "@/common/components/layout";
+import { Button } from "@/components/ui/button"
+import Layout from "../layout"
+import { Link } from "react-router"
+import { ArrowRight, FileText, Users } from "lucide-react"
+import {
+  Card,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card"
 
+// Esto de usar el layout asi con react-router, está mal,
+// pero lo voy a hacer así para terminar rápido
 export default function Home() {
-  return <Layout >
-    <div className="container mx-auto px-4 py-8">
-      <section className="flex h-[calc(100vh-220px)] flex-col items-center justify-center text-center mb-12">
-        <h2 className="text-4xl font-bold mb-4 bg-gradient-to-r from-slate-900 to-slate-600 bg-clip-text text-transparent">
-          Gestión Inteligente de Contratos
-        </h2>
-        <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-          Centraliza, protege y administra todos tus contratos en un solo lugar
-        </p>
-      </section>
-    </div>
-  </Layout >
+  return (
+    <Layout>
+      <div className="container mx-auto px-4 py-12">
+        {/* Hero Section */}
+        <section className="flex flex-col items-center gap-6 text-center">
+          <h1 className="text-4xl font-bold tracking-tight text-balance md:text-5xl lg:text-6xl">
+            Gestiona tus contratos de forma{" "}
+            <span className="text-primary">sencilla</span>
+          </h1>
+          <p className="max-w-2xl text-lg text-pretty text-muted-foreground">
+            Una plataforma completa para administrar usuarios y contratos.
+            Organiza, busca y mantén el control de toda tu documentación en un
+            solo lugar.
+          </p>
+          <div className="flex flex-wrap justify-center gap-4">
+            <Button asChild size="lg">
+              <Link to="/contracts">
+                Ver contratos
+                <ArrowRight className="ml-2 h-4 w-4" />
+              </Link>
+            </Button>
+            <Button asChild variant="outline" size="lg">
+              <Link to="/usuarios">Ver usuarios</Link>
+            </Button>
+          </div>
+        </section>
+
+        {/* Features Section */}
+        <section className="mt-20 grid gap-6 md:grid-cols-2">
+          <Card className="transition-shadow hover:shadow-lg">
+            <CardHeader>
+              <div className="mb-2 flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10">
+                <Users className="h-6 w-6 text-primary" />
+              </div>
+              <CardTitle>Gestión de Usuarios</CardTitle>
+              <CardDescription>
+                Administra los usuarios de tu sistema. Agrega, edita y organiza
+                la información de cada persona de manera eficiente.
+              </CardDescription>
+            </CardHeader>
+          </Card>
+
+          <Card className="transition-shadow hover:shadow-lg">
+            <CardHeader>
+              <div className="mb-2 flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10">
+                <FileText className="h-6 w-6 text-primary" />
+              </div>
+              <CardTitle>Gestión de Contratos</CardTitle>
+              <CardDescription>
+                Crea y gestiona contratos fácilmente. Mantén un registro
+                organizado de todos los documentos importantes.
+              </CardDescription>
+            </CardHeader>
+          </Card>
+        </section>
+      </div>
+    </Layout>
+  )
 }

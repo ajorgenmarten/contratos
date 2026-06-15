@@ -4,8 +4,8 @@
 // Get a free hosted Postgres database in seconds: `npx create-db`
 
 generator client {
-  provider = "prisma-client"
-  output   = "../generated/prisma"
+  provider     = "prisma-client"
+  output       = "../generated/prisma"
   moduleFormat = "cjs"
 }
 
@@ -31,73 +31,78 @@ enum ClientDenomination {
   OTRAS_FORMAS
 }
 
-enum ContractDetailsType {
+enum ContractType {
   DIESEL
   GASOLINA
   OTROS
 }
 
-enum ContractDetailsContainer {
+enum ContractContainer {
   ISO_CONTENEDOR
   ISO_MODULO
   BUQUE
 }
 
+enum ClientCategory {
+  Cliente
+  Proveedor
+}
+
 model User {
-  id String @id @default(uuid())
-  name String
-  username String @unique
-  password String
-  role RoleType
-  active Boolean
-  createdAt DateTime @default(now())
-  Sessions Session[]
+  id        String    @id @default(uuid())
+  name      String
+  username  String    @unique
+  password  String
+  role      RoleType
+  active    Boolean
+  createdAt DateTime  @default(now())
+  Sessions  Session[]
 }
 
 model Session {
-  id String @id @default(uuid())
-  userId String
-  secretEncrypted String
+  id        String   @id @default(uuid())
+  userId    String
   createdAt DateTime
-  User User @relation(fields: [userId], references: [id])
+  User      User     @relation(fields: [userId], references: [id])
 }
 
 model Contract {
-  id String @id @default(uuid())
-  clientName String
+  id                 String             @id @default(uuid())
+  clientName         String
   clientDenomination ClientDenomination
-  agreementNumber String
-  agreementDate DateTime
+  clientCategory     ClientCategory
+  agreementNumber    String
+  agreementDate      DateTime
   nationalityCompany String
 
-  contractTypeId String
-  contractType ContractDetailsType?
-  contractContainer ContractDetailsContainer?
-  contractNumber String
-  contractDate DateTime
-  contractValidity DateTime
+  contractTypeId    String
+  contractType      ContractType?
+  contractContainer ContractContainer?
+  contractNumber    String
+  contractDate      DateTime
+  contractValidity  DateTime
 
-  observations String
+  observations String?
 
   ContractDetails ContractDetails @relation(fields: [contractTypeId], references: [id])
-  Suplements Suplement[]
+  Supplements     Supplement[]
 }
 
 model ContractDetails {
-  id String @id @default(uuid())
-  name String
-  haveType Boolean
+  id            String     @id @default(uuid())
+  name          String
+  haveType      Boolean
   haveContainer Boolean
-  Contract Contract[]
+  Contract      Contract[]
 }
 
-model Suplement {
-  id String @id @default(uuid())
-  suplementNumber String
-  suplementDate DateTime
-  suplementObject String
-  suplementValidity DateTime
-  contractId String
+model Supplement {
+  id                 String   @id @default(uuid())
+  supplementNumber   String
+  supplementDate     DateTime
+  supplementObject   String
+  supplementValidity DateTime
+  contractId         String
 
   Contract Contract @relation(fields: [contractId], references: [id])
 }
