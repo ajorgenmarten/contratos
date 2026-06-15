@@ -20,9 +20,11 @@ import {
 } from "@/components/ui/table"
 import useList from "./hooks/list"
 import { format } from "date-fns"
+import Pagination from "@/components/custom/pagination"
 
 export default function ContractsList() {
-  const { register, totalItems, contracts } = useList()
+  const { register, totalItems, contracts, totalPages, getValues, setValue } =
+    useList()
 
   return (
     <Layout>
@@ -66,6 +68,7 @@ export default function ContractsList() {
                   <div className="relative w-full sm:w-72">
                     <Search className="absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
                     <Input
+                      {...register("search")}
                       placeholder="Buscar por nombre o cliente..."
                       className="bg-background pl-10"
                     />
@@ -73,6 +76,7 @@ export default function ContractsList() {
                   <div className="relative w-full sm:w-72">
                     <Hash className="absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
                     <Input
+                      {...register("contractNumber")}
                       placeholder="Buscar por número de contrato"
                       className="bg-background pl-10"
                     />
@@ -92,6 +96,7 @@ export default function ContractsList() {
                       <TableHead className="font-semibold">
                         Nombre del cliente
                       </TableHead>
+                      <TableHead>Número de contrato</TableHead>
                       <TableHead className="font-semibold">
                         Tipo de cliente
                       </TableHead>
@@ -123,6 +128,7 @@ export default function ContractsList() {
                       <TableRow key={contract.id}>
                         <TableCell>{contract.ContractDetails?.name}</TableCell>
                         <TableCell>{contract.clientName}</TableCell>
+                        <TableCell>{contract.contractNumber}</TableCell>
                         <TableCell>{contract.clientCategory}</TableCell>
                         <TableCell>{contract.clientDenomination}</TableCell>
                         <TableCell>{contract.nationalityCompany}</TableCell>
@@ -149,6 +155,13 @@ export default function ContractsList() {
                     ))}
                   </TableBody>
                 </Table>
+                <Pagination
+                  paginationSize={5}
+                  totalItems={totalItems}
+                  totalPages={totalPages}
+                  page={getValues("page") as number}
+                  onPageChange={(page) => setValue("page", page)}
+                />
               </div>
             </CardContent>
           </Card>

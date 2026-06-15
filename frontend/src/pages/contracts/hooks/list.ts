@@ -18,9 +18,14 @@ export default function useList() {
   const [totalItems, setTotalItems] = useState(0)
   const [totalPages, setTotalPages] = useState(0)
 
-  const { formState, register, getValues, watch } = useForm({
+  const { formState, register, getValues, watch, setValue } = useForm({
     resolver: zodResolver(filterSchema),
     mode: "all",
+    defaultValues: {
+      contractNumber: "",
+      page: 1,
+      search: "",
+    },
   })
 
   const filterProducts = useCallback(async () => {
@@ -37,11 +42,20 @@ export default function useList() {
 
   const searchWatched = watch("search")
   const contractWatched = watch("contractNumber")
+  const pageWatched = watch("page")
 
   useEffect(() => {
     const timeout = setTimeout(filterProducts, 250)
     return () => clearTimeout(timeout)
-  }, [searchWatched, contractWatched, filterProducts])
+  }, [searchWatched, contractWatched, pageWatched, filterProducts])
 
-  return { contracts, totalItems, totalPages, formState, register }
+  return {
+    contracts,
+    totalItems,
+    totalPages,
+    formState,
+    register,
+    getValues,
+    setValue,
+  }
 }
