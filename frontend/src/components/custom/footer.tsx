@@ -38,13 +38,13 @@ export default function Footer() {
             <h3 className="font-semibold">Contratos</h3>
             <nav className="flex flex-col gap-2">
               <Link
-                to="/contratos"
+                to="/contracts"
                 className="text-sm text-muted-foreground hover:text-foreground"
               >
                 Ver contratos
               </Link>
               <Link
-                to="/contratos/agregar"
+                to="/contracts/add"
                 className="text-sm text-muted-foreground hover:text-foreground"
               >
                 Agregar contrato

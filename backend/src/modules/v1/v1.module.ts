@@ -5,6 +5,7 @@ import ContractsRepository from './contracts/contracts.repository';
 import ContractsController from './contracts/contracts.controller';
 import UserService from './users/users.service';
 import UsersController from './users/users.controller';
+import UsersRepository from './users/users.repository';
 
 @Module({
   providers: [
@@ -17,6 +18,7 @@ import UsersController from './users/users.controller';
 
     // Users providers
     UserService,
+    UsersRepository,
   ],
   controllers: [
     // Contracts controllers

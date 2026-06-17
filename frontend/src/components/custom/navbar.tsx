@@ -41,16 +41,13 @@ export default function Navbar() {
             </DropdownMenuTrigger>
             <DropdownMenuContent align="start">
               <DropdownMenuItem asChild>
-                <Link to="/usuarios" className="flex items-center gap-2">
+                <Link to="/users" className="flex items-center gap-2">
                   <Eye className="h-4 w-4" />
                   Ver usuarios
                 </Link>
               </DropdownMenuItem>
               <DropdownMenuItem asChild>
-                <Link
-                  to="/usuarios/agregar"
-                  className="flex items-center gap-2"
-                >
+                <Link to="/users/add" className="flex items-center gap-2">
                   <UserPlus className="h-4 w-4" />
                   Agregar usuario
                 </Link>

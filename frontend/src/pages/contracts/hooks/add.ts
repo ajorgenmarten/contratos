@@ -137,5 +137,6 @@ export default function useAddContract() {
     append,
     onSubmit,
     control,
+    reset,
   }
 }

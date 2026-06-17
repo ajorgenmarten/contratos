@@ -6,6 +6,8 @@ import {
   RoleType,
   ClientCategory,
 } from './modles.types';
+import { hashSync } from 'bcrypt';
+import { User as UserPrisma } from 'generated/prisma/client';
 
 export class User implements UserType {
   constructor(
@@ -16,7 +18,7 @@ export class User implements UserType {
     private _role: RoleType,
     private _active: boolean,
     private readonly _createdAt: Date,
-    private _Sessions: Session[],
+    private _Sessions?: Session[],
   ) {}
 
   get id(): string {
@@ -47,8 +49,49 @@ export class User implements UserType {
     return this._createdAt;
   }
 
-  get Sessions(): Session[] {
+  get Sessions(): Session[] | undefined {
     return this._Sessions;
+  }
+
+  static new(
+    name: string,
+    username: string,
+    password: string,
+    role: RoleType,
+    active: boolean = true,
+  ) {
+    const hashedPassword = hashSync(password, 12);
+    return new User(
+      crypto.randomUUID(),
+      name,
+      username,
+      hashedPassword,
+      role,
+      active,
+      new Date(),
+    );
+  }
+  toObject() {
+    return {
+      id: this._id,
+      name: this._name,
+      username: this._username,
+      active: this._active,
+      role: this._role,
+      createdAt: this._createdAt,
+    } as Omit<UserType, 'password'>;
+  }
+
+  static fromPrisma(user: UserPrisma) {
+    return new User(
+      user.id,
+      user.name,
+      user.username,
+      user.password,
+      user.role as RoleType,
+      user.active,
+      user.createdAt,
+    );
   }
 }
 

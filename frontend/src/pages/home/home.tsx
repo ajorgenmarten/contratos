@@ -34,7 +34,7 @@ export default function Home() {
               </Link>
             </Button>
             <Button asChild variant="outline" size="lg">
-              <Link to="/usuarios">Ver usuarios</Link>
+              <Link to="/users">Ver usuarios</Link>
             </Button>
           </div>
         </section>

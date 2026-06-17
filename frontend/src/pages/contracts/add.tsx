@@ -59,6 +59,7 @@ export default function ContractAdd() {
     append,
     onSubmit,
     control,
+    reset,
   } = useAddContract()
 
   const agreementDate = watch("agreementDate")
@@ -249,7 +250,11 @@ export default function ContractAdd() {
                   <Button>
                     <Plus /> Agregar contrato
                   </Button>
-                  <Button variant="outline">
+                  <Button
+                    variant="outline"
+                    type="button"
+                    onClick={() => reset()}
+                  >
                     <Trash /> Resetear
                   </Button>
                 </div>

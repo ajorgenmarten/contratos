@@ -36,7 +36,7 @@ export enum ContractContainer {
 export interface User {
   id: string
   name: string
-  email: string
+  username: string
   role: RoleType
   active: boolean
   createdAt: Date

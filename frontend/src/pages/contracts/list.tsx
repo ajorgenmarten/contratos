@@ -61,7 +61,7 @@ export default function ContractsList() {
                 <div>
                   <CardTitle className="text-xl">Lista de Contratos</CardTitle>
                   <CardDescription className="mt-1">
-                    {totalItems} contratos registrados en el sistema
+                    {totalItems} contratos coincidentes con la búsqueda
                   </CardDescription>
                 </div>
                 <div className="flex flex-row gap-2">
@@ -85,7 +85,6 @@ export default function ContractsList() {
               </div>
             </CardHeader>
             <CardContent className="p-0">
-              {totalItems === 0 && <span>No hay contratos en el sistema</span>}
               <div className="overflow-x-auto">
                 <Table>
                   <TableHeader>
@@ -124,6 +123,15 @@ export default function ContractsList() {
                     </TableRow>
                   </TableHeader>
                   <TableBody>
+                    {totalItems === 0 && (
+                      <TableRow>
+                        <TableCell colSpan={5}>
+                          <span className="block w-full py-2 text-center">
+                            No se encotranron contratos
+                          </span>
+                        </TableCell>
+                      </TableRow>
+                    )}
                     {contracts.map((contract) => (
                       <TableRow key={contract.id}>
                         <TableCell>{contract.ContractDetails?.name}</TableCell>
