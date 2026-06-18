@@ -123,4 +123,10 @@ export default class ContractsRepository {
     });
     return { totalPages, totalItems, results, page };
   }
+
+  deleteContract(id: string) {
+    return this.PrismaService.contract.delete({
+      where: { id },
+    });
+  }
 }

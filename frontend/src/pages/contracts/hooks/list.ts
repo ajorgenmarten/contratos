@@ -40,6 +40,14 @@ export default function useList() {
     setContracts(response.data.results)
   }, [getValues])
 
+  const deleteContract = useCallback(
+    async (id: string) => {
+      await http.delete(`/v1/contracts/${id}`)
+      filterProducts()
+    },
+    [filterProducts]
+  )
+
   const searchWatched = watch("search")
   const contractWatched = watch("contractNumber")
   const pageWatched = watch("page")
@@ -57,5 +65,6 @@ export default function useList() {
     register,
     getValues,
     setValue,
+    deleteContract,
   }
 }

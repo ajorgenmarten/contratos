@@ -56,4 +56,8 @@ export default class ContractsService {
   filterContracts(data: FilterContractDto) {
     return this.ContractsRepository.filterContracts(data);
   }
+
+  deleteContract(id: string) {
+    return this.ContractsRepository.deleteContract(id);
+  }
 }

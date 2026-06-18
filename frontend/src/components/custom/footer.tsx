@@ -73,8 +73,8 @@ export default function Footer() {
 
         <div className="mt-8 border-t border-border pt-6">
           <p className="text-center text-sm text-muted-foreground">
-            © {new Date().getFullYear()} Contratos. Todos los derechos
-            reservados.
+            © {new Date().getFullYear()} Contratos. Hecho por Alejandro Jorgen
+            Martén
           </p>
         </div>
       </div>

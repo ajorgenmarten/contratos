@@ -6,11 +6,16 @@ import ContractsController from './contracts/contracts.controller';
 import UserService from './users/users.service';
 import UsersController from './users/users.controller';
 import UsersRepository from './users/users.repository';
+import AuthService from './auth/auth.service';
+import AuthRepository from './auth/auth.repository';
+import AuthController from './auth/auth.controller';
+import JWTService from './commons/services/jwt.service';
 
 @Module({
   providers: [
     // Common providers
     PrismaService,
+    JWTService,
 
     // Contracts providers
     ContractsService,
@@ -19,6 +24,10 @@ import UsersRepository from './users/users.repository';
     // Users providers
     UserService,
     UsersRepository,
+
+    // Auth providers
+    AuthService,
+    AuthRepository,
   ],
   controllers: [
     // Contracts controllers
@@ -26,6 +35,9 @@ import UsersRepository from './users/users.repository';
 
     // Users controllers
     UsersController,
+
+    // Auth controllers
+    AuthController,
   ],
 })
 export default class V1Module {}

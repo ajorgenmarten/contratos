@@ -1,4 +1,12 @@
-import { Body, Controller, Get, Post, Query } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Post,
+  Query,
+} from '@nestjs/common';
 import ContractsService from './contracts.service';
 import CreateContractDto from './dto/create-contract.dto';
 import FilterContractDto from './dto/filter-contracts.dto';
@@ -20,5 +28,10 @@ export default class ContractsController {
   @Get()
   filterContracts(@Query() query: FilterContractDto) {
     return this.ContractsService.filterContracts(query);
+  }
+
+  @Delete(':id')
+  deleteContract(@Param('id') id: string) {
+    return this.ContractsService.deleteContract(id);
   }
 }

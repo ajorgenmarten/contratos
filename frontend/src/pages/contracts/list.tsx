@@ -1,6 +1,6 @@
 import { Link } from "react-router"
 import Layout from "../layout"
-import { ArrowLeft, Hash, Plus, Search } from "lucide-react"
+import { ArrowLeft, Hash, Plus, Search, Trash } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import {
   Card,
@@ -21,10 +21,25 @@ import {
 import useList from "./hooks/list"
 import { format } from "date-fns"
 import Pagination from "@/components/custom/pagination"
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog"
 
 export default function ContractsList() {
-  const { register, totalItems, contracts, totalPages, getValues, setValue } =
-    useList()
+  const {
+    register,
+    totalItems,
+    contracts,
+    totalPages,
+    getValues,
+    setValue,
+    deleteContract,
+  } = useList()
 
   return (
     <Layout>
@@ -120,12 +135,13 @@ export default function ContractsList() {
                       <TableHead className="font-semibold">
                         Vigencia de contrato
                       </TableHead>
+                      <TableHead className="font-semibold">Opciones</TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
                     {totalItems === 0 && (
                       <TableRow>
-                        <TableCell colSpan={5}>
+                        <TableCell colSpan={12}>
                           <span className="block w-full py-2 text-center">
                             No se encotranron contratos
                           </span>
@@ -158,6 +174,32 @@ export default function ContractsList() {
                         </TableCell>
                         <TableCell>
                           {format(contract.contractValidity, "PPP")}
+                        </TableCell>
+                        <TableCell>
+                          <AlertDialog>
+                            <AlertDialogTrigger asChild>
+                              <Button
+                                variant="ghost"
+                                className="text-destructive/40 hover:text-destructive"
+                              >
+                                <Trash />
+                              </Button>
+                            </AlertDialogTrigger>
+                            <AlertDialogContent>
+                              <AlertDialogTitle>
+                                Delete Contract
+                              </AlertDialogTitle>
+                              <AlertDialogDescription>
+                                ¿Estas seguro que quieres borrar este contrato?
+                              </AlertDialogDescription>
+                              <AlertDialogAction
+                                variant="destructive"
+                                onClick={() => deleteContract(contract.id)}
+                              >
+                                Borrar
+                              </AlertDialogAction>
+                            </AlertDialogContent>
+                          </AlertDialog>
                         </TableCell>
                       </TableRow>
                     ))}

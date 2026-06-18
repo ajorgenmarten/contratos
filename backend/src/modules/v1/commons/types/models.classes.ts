@@ -6,7 +6,7 @@ import {
   RoleType,
   ClientCategory,
 } from './modles.types';
-import { hashSync } from 'bcrypt';
+import { hashSync, compareSync } from 'bcrypt';
 import { User as UserPrisma } from 'generated/prisma/client';
 
 export class User implements UserType {
@@ -51,6 +51,10 @@ export class User implements UserType {
 
   get Sessions(): Session[] | undefined {
     return this._Sessions;
+  }
+
+  comparePassword(password: string) {
+    return compareSync(password, this._password);
   }
 
   static new(
@@ -117,6 +121,14 @@ export class Session {
 
   get User(): User | undefined {
     return this._User;
+  }
+
+  static new(user: User | string) {
+    return new Session(
+      crypto.randomUUID(),
+      typeof user == 'string' ? user : user.id,
+      new Date(),
+    );
   }
 }
 
