@@ -1,0 +1,32 @@
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: contracts-backend
+    environment:
+      - NODE_ENV=production
+      - PORT=3000
+      - JWT_ACCESS_SECRET=secret-access-token
+      - JWT_REFRESH_SECRET=secret-refresh-token
+      - DATABASE_URL=postgres://postgres:root@contracts-postgres:5432/contracts
+    ports:
+      - "3000:3000"
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: contracts-frontend
+    environment:
+      - VITE_BACKEND_URL=http://localhost:3000
+    ports:
+      - "8081:80"
+
+  postgres:
+    image: postgres:18-alpine
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=root
+      - POSTGRES_DATABASE=contracts
+    container_name: contracts-postgres
