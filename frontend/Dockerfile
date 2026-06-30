@@ -8,7 +8,7 @@ ENV VITE_BACKEND_URL=${VITE_BACKEND_URL}
 
 RUN corepack enable pnpm
 
-COPY package.json pnpm-lock.yaml
+COPY package.json pnpm-lock.yaml .
 
 RUN pnpm install --frozen-lockfile
 
