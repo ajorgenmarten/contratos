@@ -10,12 +10,18 @@ import AuthService from './auth/auth.service';
 import AuthRepository from './auth/auth.repository';
 import AuthController from './auth/auth.controller';
 import JWTService from './commons/services/jwt.service';
+import SessionGuard from './commons/guards/session.guard';
+import AuthGuard from './commons/guards/auth.guard';
+import RolesGuard from './commons/guards/roles.guard';
 
 @Module({
   providers: [
     // Common providers
     PrismaService,
     JWTService,
+    SessionGuard,
+    AuthGuard,
+    RolesGuard,
 
     // Contracts providers
     ContractsService,

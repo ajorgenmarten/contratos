@@ -62,4 +62,27 @@ export default class UsersRepository {
       },
     });
   }
+
+  async findUserById(uid: string) {
+    const user = await this.PrismaService.user.findFirst({
+      where: { id: uid },
+    });
+
+    if (!user) return null;
+
+    return User.fromPrisma(user);
+  }
+
+  updateUser(user: User) {
+    return this.PrismaService.user.update({
+      where: { id: user.id },
+      data: {
+        name: user.name,
+        username: user.username,
+        password: user.password,
+        active: user.active,
+        role: user.role,
+      },
+    });
+  }
 }

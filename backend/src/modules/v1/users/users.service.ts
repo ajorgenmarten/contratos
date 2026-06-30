@@ -1,8 +1,13 @@
-import { ConflictException, Injectable } from '@nestjs/common';
+import {
+  ConflictException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import CreateUserDto from './dto/create-user.dto';
 import UsersRepository from './users.repository';
 import { User } from '../commons/types/models.classes';
 import FilterUserDto from './dto/filter-user.dto';
+import ResetPasswordDto from './dto/reset-password.dto';
 
 @Injectable()
 export default class UsersService {
@@ -27,5 +32,17 @@ export default class UsersService {
 
   filterUser(data: FilterUserDto) {
     return this.UsersRepository.filterUsers(data);
+  }
+
+  async resetPassword(data: ResetPasswordDto) {
+    const userFound = await this.UsersRepository.findUserById(data.userId);
+
+    if (!userFound) throw new NotFoundException('El usuario no existe');
+
+    userFound.setPassword(data.newPassword);
+
+    await this.UsersRepository.updateUser(userFound);
+
+    return { message: 'Nueva contraseña modificada' };
   }
 }

@@ -13,4 +13,22 @@ export default class JWTService {
     const token = jwt.sign(data, envs.JWT_REFRESH_SECRET);
     return token;
   }
+
+  verifyRefreshToken(token: string) {
+    try {
+      const payload = jwt.verify(token, envs.JWT_REFRESH_SECRET);
+      return payload;
+    } catch {
+      return null;
+    }
+  }
+
+  verifyAccessToken(token: string) {
+    try {
+      const payload = jwt.verify(token, envs.JWT_ACCESS_SECRET);
+      return payload;
+    } catch {
+      return null;
+    }
+  }
 }

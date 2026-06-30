@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import PrismaService from '../commons/services/prisma.service';
-import { Session } from '../commons/types/models.classes';
+import { Session, User } from '../commons/types/models.classes';
 
 @Injectable()
 export default class AuthRepository {
@@ -14,5 +14,16 @@ export default class AuthRepository {
         createdAt: session.createdAt,
       },
     });
+  }
+
+  async getUserBySessionId(sid: string) {
+    const foundSession = await this.PrismaService.session.findFirst({
+      where: { id: sid },
+      include: { User: true },
+    });
+
+    if (!foundSession) return null;
+
+    return User.fromPrisma(foundSession.User);
   }
 }

@@ -24,11 +24,14 @@ import Pagination from "@/components/custom/pagination"
 import {
   AlertDialog,
   AlertDialogAction,
+  AlertDialogCancel,
   AlertDialogContent,
   AlertDialogDescription,
+  AlertDialogFooter,
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
+import ShowIf from "@/components/logic/show-if"
 
 export default function ContractsList() {
   const {
@@ -62,12 +65,14 @@ export default function ContractsList() {
                 Gestiona todos los contratos de tu organizacion
               </p>
             </div>
-            <Button asChild size="lg">
-              <Link to="/contracts/add">
-                <Plus className="mr-2 h-5 w-5" />
-                Agregar Contrato
-              </Link>
-            </Button>
+            <ShowIf allow={["OPERADOR"]}>
+              <Button asChild size="lg">
+                <Link to="/contracts/add">
+                  <Plus className="mr-2 h-5 w-5" />
+                  Agregar Contrato
+                </Link>
+              </Button>
+            </ShowIf>
           </div>
 
           <Card className="border-0 shadow-lg">
@@ -135,7 +140,11 @@ export default function ContractsList() {
                       <TableHead className="font-semibold">
                         Vigencia de contrato
                       </TableHead>
-                      <TableHead className="font-semibold">Opciones</TableHead>
+                      <ShowIf allow={["OPERADOR"]}>
+                        <TableHead className="font-semibold">
+                          Opciones
+                        </TableHead>
+                      </ShowIf>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
@@ -175,32 +184,40 @@ export default function ContractsList() {
                         <TableCell>
                           {format(contract.contractValidity, "PPP")}
                         </TableCell>
-                        <TableCell>
-                          <AlertDialog>
-                            <AlertDialogTrigger asChild>
-                              <Button
-                                variant="ghost"
-                                className="text-destructive/40 hover:text-destructive"
-                              >
-                                <Trash />
-                              </Button>
-                            </AlertDialogTrigger>
-                            <AlertDialogContent>
-                              <AlertDialogTitle>
-                                Delete Contract
-                              </AlertDialogTitle>
-                              <AlertDialogDescription>
-                                ¿Estas seguro que quieres borrar este contrato?
-                              </AlertDialogDescription>
-                              <AlertDialogAction
-                                variant="destructive"
-                                onClick={() => deleteContract(contract.id)}
-                              >
-                                Borrar
-                              </AlertDialogAction>
-                            </AlertDialogContent>
-                          </AlertDialog>
-                        </TableCell>
+                        <ShowIf allow={["OPERADOR"]}>
+                          <TableCell>
+                            <AlertDialog>
+                              <AlertDialogTrigger asChild>
+                                <Button
+                                  variant="ghost"
+                                  className="text-destructive/40 hover:text-destructive"
+                                >
+                                  <Trash />
+                                </Button>
+                              </AlertDialogTrigger>
+                              <AlertDialogContent>
+                                <AlertDialogTitle>
+                                  Borrar contrato de {contract.clientName}
+                                </AlertDialogTitle>
+                                <AlertDialogDescription>
+                                  ¿Estas seguro que quieres borrar este
+                                  contrato?
+                                </AlertDialogDescription>
+                                <AlertDialogFooter>
+                                  <AlertDialogCancel>
+                                    Cancelar
+                                  </AlertDialogCancel>
+                                  <AlertDialogAction
+                                    variant="destructive"
+                                    onClick={() => deleteContract(contract.id)}
+                                  >
+                                    Borrar
+                                  </AlertDialogAction>
+                                </AlertDialogFooter>
+                              </AlertDialogContent>
+                            </AlertDialog>
+                          </TableCell>
+                        </ShowIf>
                       </TableRow>
                     ))}
                   </TableBody>

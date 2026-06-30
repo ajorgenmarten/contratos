@@ -1,4 +1,5 @@
 import { create } from "zustand"
+import { persist } from "zustand/middleware"
 import type { User } from "@/types/interfaces"
 
 interface AuthStoreProps {
@@ -12,12 +13,17 @@ interface AuthStoreActions {
   clear(): void
 }
 
-const authStore = create<AuthStoreProps & AuthStoreActions>((set) => ({
-  user: null,
-  accessToken: null,
-  setUser: (data) => set({ user: data }),
-  setAccessToken: (data) => set({ accessToken: data }),
-  clear: () => set({ user: null, accessToken: null }),
-}))
+const authStore = create<AuthStoreProps & AuthStoreActions>()(
+  persist(
+    (set) => ({
+      user: null,
+      accessToken: null,
+      setUser: (data) => set({ user: data }),
+      setAccessToken: (data) => set({ accessToken: data }),
+      clear: () => set({ user: null, accessToken: null }),
+    }),
+    { name: "auth" }
+  )
+)
 
 export default authStore

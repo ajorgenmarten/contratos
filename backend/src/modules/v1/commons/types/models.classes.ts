@@ -53,6 +53,16 @@ export class User implements UserType {
     return this._Sessions;
   }
 
+  /**
+   * Este metodo solo se usa para establecer
+   * una nueva contraseña para el usuario,
+   * por ejemplo cuando el administrador quiera
+   * cambiar la contraseña a algun usuario
+   */
+  setPassword(newPassword: string) {
+    this._password = hashSync(newPassword, 12);
+  }
+
   comparePassword(password: string) {
     return compareSync(password, this._password);
   }

@@ -8,6 +8,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
+import ShowIf from "@/components/logic/show-if"
 
 // Esto de usar el layout asi con react-router, está mal,
 // pero lo voy a hacer así para terminar rápido
@@ -27,12 +28,14 @@ export default function Home() {
             solo lugar.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
-            <Button asChild size="lg">
-              <Link to="/contracts">
-                Ver contratos
-                <ArrowRight className="ml-2 h-4 w-4" />
-              </Link>
-            </Button>
+            <ShowIf allow={["CONSULTOR", "OPERADOR"]}>
+              <Button asChild size="lg">
+                <Link to="/contracts">
+                  Ver contratos
+                  <ArrowRight className="ml-2 h-4 w-4" />
+                </Link>
+              </Button>
+            </ShowIf>
             <Button asChild variant="outline" size="lg">
               <Link to="/users">Ver usuarios</Link>
             </Button>

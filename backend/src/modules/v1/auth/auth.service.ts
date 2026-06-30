@@ -1,8 +1,12 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import {
+  ForbiddenException,
+  Injectable,
+  UnauthorizedException,
+} from '@nestjs/common';
 import LoginDto from './dto/login.dto';
 import UsersRepository from '../users/users.repository';
 import JWTService from '../commons/services/jwt.service';
-import { Session } from '../commons/types/models.classes';
+import { Session, User } from '../commons/types/models.classes';
 import AuthRepository from './auth.repository';
 
 @Injectable()
@@ -20,7 +24,7 @@ export default class AuthService {
 
     if (!foundUser) throw new UnauthorizedException('Credenciales incorrectas');
 
-    if (foundUser.active)
+    if (!foundUser.active)
       throw new UnauthorizedException(
         'Su cuenta ha sido deshabilitada, porfavor contacte con el administrador',
       );
@@ -39,6 +43,16 @@ export default class AuthService {
       sid: session.id,
     });
 
-    return { accessToken, refreshToken };
+    return { accessToken, refreshToken, user: foundUser.toObject() };
+  }
+
+  refreshToken(user?: User) {
+    if (!user) throw new ForbiddenException('No tiene acceso');
+
+    const accessToken: string = this.JWTService.generateAccessToken({
+      uid: user.id,
+    });
+
+    return { accessToken };
   }
 }
