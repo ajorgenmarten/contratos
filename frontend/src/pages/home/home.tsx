@@ -19,8 +19,8 @@ export default function Home() {
         {/* Hero Section */}
         <section className="flex flex-col items-center gap-6 text-center">
           <h1 className="text-4xl font-bold tracking-tight text-balance md:text-5xl lg:text-6xl">
-            Gestiona tus contratos de forma{" "}
-            <span className="text-primary">sencilla</span>
+            Gestiona tus contratos de forma
+            <span className="ml-2 text-primary">segura y sencilla</span>
           </h1>
           <p className="max-w-2xl text-lg text-pretty text-muted-foreground">
             Una plataforma completa para administrar usuarios y contratos.
@@ -36,9 +36,11 @@ export default function Home() {
                 </Link>
               </Button>
             </ShowIf>
-            <Button asChild variant="outline" size="lg">
-              <Link to="/users">Ver usuarios</Link>
-            </Button>
+            <ShowIf allow={["ADMINISTRADOR"]}>
+              <Button asChild variant="outline" size="lg">
+                <Link to="/users">Ver usuarios</Link>
+              </Button>
+            </ShowIf>
           </div>
         </section>
 

@@ -6,8 +6,8 @@ export default function Footer() {
     <footer className="border-t border-border bg-muted/40">
       <div className="container mx-auto px-4 py-8">
         <div className="grid gap-8">
-          <div className="flex flex-col gap-3">
-            <Link to="/" className="flex items-center gap-2">
+          <div className="flex flex-col gap-3 text-center">
+            <Link to="/" className="flex items-center justify-center gap-2">
               <FileText className="h-5 w-5 text-primary" />
               <span className="font-bold">Contratos App</span>
             </Link>

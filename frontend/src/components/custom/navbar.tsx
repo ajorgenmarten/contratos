@@ -4,9 +4,12 @@ import {
   Eye,
   FilePlus,
   FileText,
+  Laptop2,
   LogOut,
+  Moon,
   Palette,
   Settings,
+  SunDim,
   User,
   UserPlus,
   Users,
@@ -21,8 +24,22 @@ import {
 import { Button } from "../ui/button"
 import ShowIf from "../logic/show-if"
 import { useAuthContext } from "@/contexts/auth/auth.context"
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogTitle,
+} from "../ui/alert-dialog"
+import { useState } from "react"
+import { useTheme } from "../theme-provider"
 
 export default function Navbar() {
+  const { setTheme, theme } = useTheme()
+  const [showDialog, setShowDialog] = useState(false)
+  const [showTheme, setShowTheme] = useState(false)
   const { logout } = useAuthContext()
 
   return (
@@ -109,16 +126,14 @@ export default function Navbar() {
                   Perfil
                 </Link>
               </DropdownMenuItem>
-              <DropdownMenuItem asChild>
-                <Link to="/ajustes/tema" className="flex items-center gap-2">
-                  <Palette className="h-4 w-4" />
-                  Cambiar tema
-                </Link>
+              <DropdownMenuItem onClick={() => setShowTheme(true)}>
+                <Palette className="h-4 w-4" />
+                Cambiar tema
               </DropdownMenuItem>
               <DropdownMenuSeparator />
               <DropdownMenuItem
-                className="flex items-center gap-2 text-destructive focus:text-destructive"
-                onClick={() => logout()}
+                variant="destructive"
+                onClick={() => setShowDialog(true)}
               >
                 <LogOut className="h-4 w-4" />
                 Salir
@@ -127,6 +142,56 @@ export default function Navbar() {
           </DropdownMenu>
         </nav>
       </div>
+      <AlertDialog open={showDialog} onOpenChange={(o) => setShowDialog(o)}>
+        <AlertDialogContent>
+          <AlertDialogTitle>Cerrar sesión</AlertDialogTitle>
+          <AlertDialogDescription>
+            ¿Estás seguro que desea cerrar sesión?
+          </AlertDialogDescription>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancelar</AlertDialogCancel>
+            <AlertDialogAction variant={"destructive"} onClick={() => logout()}>
+              Aceptar
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+      <AlertDialog open={showTheme} onOpenChange={(o) => setShowTheme(o)}>
+        <AlertDialogContent>
+          <AlertDialogTitle className="text-center">
+            Cambiar de tema
+          </AlertDialogTitle>
+          <AlertDialogDescription className="text-center">
+            Cambia de tema para el que agrade mas a tu vista
+            <span className="flex justify-center">
+              Presiona (Esc) para salir
+            </span>
+          </AlertDialogDescription>
+          <div className="flex items-center justify-center gap-6">
+            <Button
+              className="h-14 w-14"
+              variant={theme === "light" ? "outline" : "ghost"}
+              onClick={() => setTheme("light")}
+            >
+              <SunDim className="size-12 text-yellow-400" />
+            </Button>
+            <Button
+              className="h-14 w-14"
+              variant={theme === "dark" ? "outline" : "ghost"}
+              onClick={() => setTheme("dark")}
+            >
+              <Moon className="size-10" />
+            </Button>
+            <Button
+              className="h-14 w-14"
+              variant={theme === "system" ? "outline" : "ghost"}
+              onClick={() => setTheme("system")}
+            >
+              <Laptop2 className="size-10 text-gray-500" />
+            </Button>
+          </div>
+        </AlertDialogContent>
+      </AlertDialog>
     </header>
   )
 }

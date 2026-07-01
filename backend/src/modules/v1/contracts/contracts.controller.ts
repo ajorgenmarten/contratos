@@ -35,6 +35,7 @@ export default class ContractsController {
     return this.ContractsService.createContract(body);
   }
 
+  @Roles([RoleType.OPERADOR, RoleType.CONSULTOR])
   @Get()
   filterContracts(@Query() query: FilterContractDto) {
     return this.ContractsService.filterContracts(query);

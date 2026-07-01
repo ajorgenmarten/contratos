@@ -1,8 +1,9 @@
 {
-  "name": "vite-app",
+  "name": "contracts-frontend",
   "private": true,
   "version": "0.0.1",
   "type": "module",
+  "license":"MIT",
   "author": {
     "email": "ajorgenmarten35@gmail.com",
     "name": "Alejandro Jorgen Martén",
