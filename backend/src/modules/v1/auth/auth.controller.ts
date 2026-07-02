@@ -25,8 +25,6 @@ export default class AuthController {
     return res
       .cookie('refresh-token', refreshToken, {
         httpOnly: true,
-        secure: true,
-        sameSite: 'none',
       })
       .json({ accessToken, user });
   }
