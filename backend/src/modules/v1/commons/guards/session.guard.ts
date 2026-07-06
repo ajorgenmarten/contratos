@@ -29,7 +29,8 @@ export default class SessionGuard implements CanActivate {
 
     const user = await this.AuthRepository.getUserBySessionId(payload.sid);
 
-    if (!user) throw new UnauthorizedException('No está authorizado');
+    if (!user || !user.active)
+      throw new UnauthorizedException('No está authorizado');
 
     request.user = user;
 

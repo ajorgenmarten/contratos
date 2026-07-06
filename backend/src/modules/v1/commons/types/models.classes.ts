@@ -53,6 +53,18 @@ export class User implements UserType {
     return this._Sessions;
   }
 
+  set name(value: string) {
+    this._name = value;
+  }
+
+  set role(value: RoleType) {
+    this._role = value;
+  }
+
+  set active(value: boolean) {
+    this._active = value;
+  }
+
   /**
    * Este metodo solo se usa para establecer
    * una nueva contraseña para el usuario,

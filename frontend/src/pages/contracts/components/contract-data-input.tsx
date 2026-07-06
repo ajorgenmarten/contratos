@@ -102,6 +102,7 @@ export default function ContractDataInput({
             />
           </PopoverContent>
         </Popover>
+        <SpanError errorField="contractDate" errors={formState.errors} />
       </div>
 
       <div className="space-y-2">

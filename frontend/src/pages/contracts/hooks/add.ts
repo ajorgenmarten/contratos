@@ -44,8 +44,8 @@ const contractSchema = z.object({
     .enum(ContractContainer, "Por favor seleccione un contenedor de contrato")
     .optional(),
   contractNumber: z.string().min(1, "El número de contrato es requerido"),
-  contractDate: z.date(),
-  contractValidity: z.date(),
+  contractDate: z.date("La fecha de contrato es requerida"),
+  contractValidity: z.date("La fecha de vigencia de contratos es requerida"),
 
   observations: z.string().optional(),
   supplements: z.array(supplementSchema),

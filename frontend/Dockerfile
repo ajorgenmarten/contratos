@@ -12,6 +12,8 @@ COPY package.json pnpm-lock.yaml .
 
 RUN pnpm install --frozen-lockfile
 
+RUN pnpm approve-builds --all
+
 COPY . .
 
 RUN pnpm build:ignore

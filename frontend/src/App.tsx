@@ -10,6 +10,7 @@ import Login from "./pages/login/login"
 import AuthProvider from "./contexts/auth/auth.provider"
 import IsAuth from "./components/logic/is-auth"
 import NotAuth from "./components/logic/not-auth"
+import UserDetails from "./pages/users/details"
 
 export function App() {
   return (
@@ -61,6 +62,14 @@ export function App() {
             element={
               <IsAuth>
                 <UsersAdd />
+              </IsAuth>
+            }
+          />
+          <Route
+            path="/users/:id"
+            element={
+              <IsAuth>
+                <UserDetails />
               </IsAuth>
             }
           />

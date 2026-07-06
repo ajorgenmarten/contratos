@@ -1,4 +1,4 @@
-import { ArrowLeft, Plus, Search } from "lucide-react"
+import { ArrowLeft, Eye, Plus, Search } from "lucide-react"
 import Layout from "../layout"
 import { Button } from "@/components/ui/button"
 import {
@@ -21,6 +21,8 @@ import {
 } from "@/components/ui/table"
 import { format } from "date-fns"
 import Pagination from "@/components/custom/pagination"
+import { Switch } from "@/components/ui/switch"
+import ListUserRow from "./components/list-user-row"
 
 export default function UserList() {
   const { register, totalItems, users, getValues, setValue, totalPages } =
@@ -87,6 +89,7 @@ export default function UserList() {
                       <TableHead className="font-semibold">
                         Fecha de creación
                       </TableHead>
+                      <TableHead className="font-semibold">Opciones</TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
@@ -100,15 +103,7 @@ export default function UserList() {
                       </TableRow>
                     )}
                     {users.map((user) => (
-                      <TableRow key={user.id}>
-                        <TableCell>{user.name}</TableCell>
-                        <TableCell>{user.username}</TableCell>
-                        <TableCell>{user.role}</TableCell>
-                        <TableCell>
-                          {user.active ? "Activo" : "Inactivo"}
-                        </TableCell>
-                        <TableCell>{format(user.createdAt, "PPP")}</TableCell>
-                      </TableRow>
+                      <ListUserRow key={user.id} user={user} />
                     ))}
                   </TableBody>
                 </Table>
