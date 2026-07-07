@@ -75,6 +75,13 @@ export class User implements UserType {
     this._password = hashSync(newPassword, 12);
   }
 
+  changePassword(oldPassword: string, newPassword: string) {
+    if (!this.comparePassword(oldPassword))
+      throw new Error('Contraseña incorrecta');
+
+    this.setPassword(newPassword);
+  }
+
   comparePassword(password: string) {
     return compareSync(password, this._password);
   }

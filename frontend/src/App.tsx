@@ -11,6 +11,8 @@ import AuthProvider from "./contexts/auth/auth.provider"
 import IsAuth from "./components/logic/is-auth"
 import NotAuth from "./components/logic/not-auth"
 import UserDetails from "./pages/users/details"
+import Profile from "./pages/profile/profile"
+import Sessions from "./pages/profile/sessions"
 
 export function App() {
   return (
@@ -70,6 +72,22 @@ export function App() {
             element={
               <IsAuth>
                 <UserDetails />
+              </IsAuth>
+            }
+          />
+          <Route
+            path="/profile"
+            element={
+              <IsAuth>
+                <Profile />
+              </IsAuth>
+            }
+          />
+          <Route
+            path="/profile/sessions"
+            element={
+              <IsAuth>
+                <Sessions />
               </IsAuth>
             }
           />

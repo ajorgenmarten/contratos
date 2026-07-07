@@ -8,6 +8,7 @@ import UsersRepository from '../users/users.repository';
 import JWTService from '../commons/services/jwt.service';
 import { Session, User } from '../commons/types/models.classes';
 import AuthRepository from './auth.repository';
+import ChangePasswordDto from './dto/change-password.dto';
 
 @Injectable()
 export default class AuthService {
@@ -54,5 +55,24 @@ export default class AuthService {
     });
 
     return { accessToken };
+  }
+
+  changePassword(user: User, data: ChangePasswordDto) {
+    user.changePassword(data.oldPassword, data.newPassword);
+    return this.UsersRepository.updateUser(user)
+      .then(() => ({
+        message: 'Contraseña cambiada',
+      }))
+      .catch((err) => {
+        throw err;
+      });
+  }
+
+  logout(sid: string) {
+    return this.AuthRepository.deleteSessionById(sid);
+  }
+
+  getMySessions(uid: string) {
+    return this.AuthRepository.getSessionsByUserId(uid);
   }
 }

@@ -33,6 +33,7 @@ export default class SessionGuard implements CanActivate {
       throw new UnauthorizedException('No está authorizado');
 
     request.user = user;
+    request.sessionId = payload.sid;
 
     return true;
   }

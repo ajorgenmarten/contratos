@@ -42,6 +42,12 @@ export interface User {
   createdAt: Date
 }
 
+export interface Session {
+  id: string
+  userId: string
+  createdAt: Date
+}
+
 export interface Contract {
   id: string
   clientName: string

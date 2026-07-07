@@ -26,4 +26,18 @@ export default class AuthRepository {
 
     return User.fromPrisma(foundSession.User);
   }
+
+  deleteSessionById(sid: string) {
+    return this.PrismaService.session.delete({ where: { id: sid } });
+  }
+
+  deleteSessionsByUserId(uid: string) {
+    return this.PrismaService.session.deleteMany({ where: { userId: uid } });
+  }
+
+  async getSessionsByUserId(uid: string) {
+    return this.PrismaService.session.findMany({
+      where: { userId: uid },
+    });
+  }
 }

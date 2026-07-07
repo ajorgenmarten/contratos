@@ -10,10 +10,14 @@ import FilterUserDto from './dto/filter-user.dto';
 import ResetPasswordDto from './dto/reset-password.dto';
 import UpdateUserDto from './dto/update-user.dto';
 import DisableUserDto from './dto/disable-user.dto';
+import AuthRepository from '../auth/auth.repository';
 
 @Injectable()
 export default class UsersService {
-  constructor(private readonly UsersRepository: UsersRepository) {}
+  constructor(
+    private readonly UsersRepository: UsersRepository,
+    private readonly AuthRepository: AuthRepository,
+  ) {}
 
   async createUser(data: CreateUserDto) {
     const userFound = await this.UsersRepository.findUserByUsername(
@@ -77,6 +81,8 @@ export default class UsersService {
     foundUser.active = data.active;
 
     await this.UsersRepository.updateUser(foundUser);
+    if (!foundUser.active)
+      await this.AuthRepository.deleteSessionsByUserId(foundUser.id);
 
     return {
       message: `Usuario ${foundUser.username} has sido ${foundUser.active ? 'habilidato' : 'deshabilitado'}`,

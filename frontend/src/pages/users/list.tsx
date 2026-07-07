@@ -19,9 +19,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
-import { format } from "date-fns"
 import Pagination from "@/components/custom/pagination"
-import { Switch } from "@/components/ui/switch"
 import ListUserRow from "./components/list-user-row"
 
 export default function UserList() {

@@ -4,6 +4,7 @@ import {
   Delete,
   Get,
   Post,
+  Put,
   Req,
   Res,
   UseGuards,
@@ -12,6 +13,9 @@ import LoginDto from './dto/login.dto';
 import AuthService from './auth.service';
 import { type Request, type Response } from 'express';
 import SessionGuard from '../commons/guards/session.guard';
+import ChangePasswordDto from './dto/change-password.dto';
+import AuthGuard from '../commons/guards/auth.guard';
+import { User } from '../commons/types/models.classes';
 
 @Controller('v1/auth')
 export default class AuthController {
@@ -29,15 +33,34 @@ export default class AuthController {
       .json({ accessToken, user });
   }
 
+  @UseGuards(SessionGuard, AuthGuard)
+  @Put('change-password')
+  changePassword(@Body() body: ChangePasswordDto, @Req() req: Request) {
+    const user = req.user as User;
+    return this.AuthService.changePassword(user, body);
+  }
+
   @UseGuards(SessionGuard)
   @Delete('logout')
   logout(@Req() request: Request, @Res() res: Response) {
-    return res.clearCookie('refresh-token').json({ message: 'Vuelva pronto.' });
+    return this.AuthService.logout(request.sessionId as string)
+      .then(() =>
+        res.clearCookie('refresh-token').json({ message: 'Vuelva pronto' }),
+      )
+      .catch((err) => {
+        throw err;
+      });
   }
 
   @UseGuards(SessionGuard)
   @Get('refresh-token')
   refreshToken(@Req() request: Request) {
     return this.AuthService.refreshToken(request.user);
+  }
+
+  @UseGuards(SessionGuard, AuthGuard)
+  @Get('my-sessions')
+  mySessions(@Req() request: Request) {
+    return this.AuthService.getMySessions((request.user as User).id);
   }
 }

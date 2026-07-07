@@ -121,7 +121,7 @@ export default function Navbar() {
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
               <DropdownMenuItem asChild>
-                <Link to="/ajustes/perfil" className="flex items-center gap-2">
+                <Link to="/profile" className="flex items-center gap-2">
                   <User className="h-4 w-4" />
                   Perfil
                 </Link>
