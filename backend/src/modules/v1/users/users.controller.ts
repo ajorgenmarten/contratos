@@ -6,6 +6,7 @@ import {
   Post,
   Put,
   Query,
+  Req,
   UseGuards,
 } from '@nestjs/common';
 import UsersService from './users.service';
@@ -20,6 +21,8 @@ import RolesGuard from '../commons/guards/roles.guard';
 import GetUserDto from './dto/get-user.dto';
 import UpdateUserDto from './dto/update-user.dto';
 import DisableUserDto from './dto/disable-user.dto';
+import { type Request } from 'express';
+import { User } from '../commons/types/models.classes';
 
 @Roles([RoleType.ADMINISTRADOR])
 @UseGuards(SessionGuard, AuthGuard, RolesGuard)
@@ -43,8 +46,8 @@ export default class UsersController {
   }
 
   @Get('filter')
-  filterUsers(@Query() query: FilterUserDto) {
-    return this.UserService.filterUser(query);
+  filterUsers(@Query() query: FilterUserDto, @Req() request: Request) {
+    return this.UserService.filterUser(query, [(request.user as User).id]);
   }
 
   @Get(':id')

@@ -18,7 +18,7 @@ export default class UsersRepository {
     return User.fromPrisma(user);
   }
 
-  async filterUsers(data: FilterUserDto) {
+  async filterUsers(data: FilterUserDto, except: string[] = []) {
     const page = data.page || 1;
     const pageSize = 20;
     const search = data.search || '';
@@ -28,6 +28,7 @@ export default class UsersRepository {
         { name: { contains: search, mode: 'insensitive' } },
         { username: { contains: search, mode: 'insensitive' } },
       ],
+      id: { notIn: except },
     };
 
     const totalItems = await this.PrismaService.user.count({

@@ -44,8 +44,8 @@ export default class UsersService {
     return { user: user.toObject() };
   }
 
-  filterUser(data: FilterUserDto) {
-    return this.UsersRepository.filterUsers(data);
+  filterUser(data: FilterUserDto, except: string[] = []) {
+    return this.UsersRepository.filterUsers(data, except);
   }
 
   async resetPassword(data: ResetPasswordDto) {
