@@ -6,7 +6,7 @@ COPY pnpm-lock.yaml package.json pnpm-workspace.yaml .
 
 RUN corepack enable pnpm
 
-RUN pnpm install --frozen-lockfile
+RUN pnpm install --frozen-lockfile --ignore-scripts
 
 COPY . .
 

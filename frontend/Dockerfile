@@ -10,7 +10,7 @@ RUN corepack enable pnpm
 
 COPY package.json pnpm-lock.yaml .
 
-RUN pnpm install --frozen-lockfile && pnpm approve-builds --all
+RUN pnpm install --frozen-lockfile --ignore-scripts
 
 COPY . .
 
