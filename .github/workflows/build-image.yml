@@ -48,6 +48,6 @@ jobs:
           context: ./${{ matrix.service }}
           push: true
           tags: ${{ env.DOCKER_USERNAME }}/contracts-${{ matrix.service == 'backend' && 'backend' || 'frontend' }}:${{ github.sha }}
-          build-args: ${{ matrix.service == 'frontend' && format('VITE_BACKEND_URL={0}', envs.FRONTEND_BUILD_ARG_BACKEND_URL)}}
+          build-args: ${{ matrix.service == 'frontend' && format('VITE_BACKEND_URL={0}', env.FRONTEND_BUILD_ARG_BACKEND_URL)}}
           cache-from: type=gha
           cache-to: type=gha,mode=max
