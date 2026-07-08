@@ -18,16 +18,18 @@ FROM node:22-alpine AS DEVELOPMENT
 
 WORKDIR /home/node/app
 
-COPY --from=BUILD /home/node/app/generated .
+COPY --from=BUILD /home/node/app/generated ./generated
 
-COPY --from=BUILD /home/node/app/dist .
+COPY --from=BUILD /home/node/app/dist ./dist
 
-COPY --from=BUILD /home/node/app/prisma .
+COPY --from=BUILD /home/node/app/prisma ./prisma
+
+COPY --from=BUILD /home/node/app/prisma.config.ts .
 
 COPY pnpm-lock.yaml package.json pnpm-workspace.yaml .
 
 RUN corepack enable pnpm
 
-RUN pnpm install --frozen-lockfile --prod
+RUN pnpm install --frozen-lockfile --ignore-scripts --prod
 
 CMD [ "node", "src/main.js" ]
