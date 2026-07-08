@@ -11,11 +11,13 @@ const envSchema = z.object({
 
   JWT_ACCESS_SECRET: z
     .string()
-    .min(8, 'JWT_ACCESS_SECRET debe tener al menos 8 caracteres'),
+    .min(8, 'JWT_ACCESS_SECRET debe tener al menos 8 caracteres')
+    .default('access-token-secret'),
 
   JWT_REFRESH_SECRET: z
     .string()
-    .min(8, 'JWT_REFRESH_SECRET debe tener al menos 8 caracteres'),
+    .min(8, 'JWT_REFRESH_SECRET debe tener al menos 8 caracteres')
+    .default('refresh-token-secret'),
 
   DATABASE_URL: z
     .string()
