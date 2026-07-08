@@ -24,6 +24,8 @@ COPY --from=BUILD /home/node/app/dist .
 
 COPY --from=BUILD /home/node/app/prisma .
 
+COPY pnpm-lock.yaml package.json pnpm-workspace.yaml .
+
 RUN corepack enable pnpm
 
 RUN pnpm install --frozen-lockfile --prod
