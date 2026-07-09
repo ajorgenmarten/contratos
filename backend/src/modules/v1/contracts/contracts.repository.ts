@@ -124,6 +124,17 @@ export default class ContractsRepository {
     return { totalPages, totalItems, results, page };
   }
 
+  async findById(id: string) {
+    const contract = await this.PrismaService.contract.findFirst({
+      where: { id },
+      include: { Supplements: true, ContractDetails: true },
+    });
+
+    if (!contract) return null;
+
+    return Contract.fromPrisma(contract);
+  }
+
   deleteContract(id: string) {
     return this.PrismaService.contract.delete({
       where: { id },

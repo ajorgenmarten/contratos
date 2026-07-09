@@ -20,6 +20,7 @@ import {
 } from "@/components/ui/popover"
 import { format } from "date-fns"
 import { Calendar } from "@/components/ui/calendar"
+import { Textarea } from "@/components/ui/textarea"
 
 export default function Supplement({
   index,
@@ -70,7 +71,7 @@ export default function Supplement({
 
       <div className="space-y-2">
         <LabelRequired text="Objeto de suplemento" isRequired />
-        <Input {...register(`supplements.${index}.supplementObject`)} />
+        <Textarea {...register(`supplements.${index}.supplementObject`)} />
         <SpanError
           errorField={`supplements.${index}.supplementObject`}
           errors={formState.errors}

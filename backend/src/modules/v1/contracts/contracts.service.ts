@@ -1,9 +1,16 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  HttpException,
+  HttpStatus,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { ContractContainer, ContractType } from '../commons/types/modles.types';
 import ContractsRepository from './contracts.repository';
 import CreateContractDto from './dto/create-contract.dto';
 import { Contract } from '../commons/types/models.classes';
 import FilterContractDto from './dto/filter-contracts.dto';
+import { isUUID } from 'class-validator';
 
 @Injectable()
 export default class ContractsService {
@@ -59,5 +66,16 @@ export default class ContractsService {
 
   deleteContract(id: string) {
     return this.ContractsRepository.deleteContract(id);
+  }
+
+  async getById(id?: string) {
+    if (!id || !isUUID(id))
+      throw new BadRequestException('El formato del id es incorrecto');
+
+    const contract = await this.ContractsRepository.findById(id);
+
+    if (!contract) throw new NotFoundException('El contrato no existe');
+
+    return contract.toObject();
   }
 }

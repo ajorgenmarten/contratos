@@ -83,6 +83,7 @@ export interface Supplement {
   supplementNumber: string
   supplementDate: Date
   supplementValidity: Date
+  supplementObject: string
   contractId: string
   Contract: Contract
 }

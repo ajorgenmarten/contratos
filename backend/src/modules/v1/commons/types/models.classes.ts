@@ -7,7 +7,12 @@ import {
   ClientCategory,
 } from './modles.types';
 import { hashSync, compareSync } from 'bcrypt';
-import { User as UserPrisma } from 'generated/prisma/client';
+import {
+  User as UserPrisma,
+  Supplement as SupplementPrisma,
+  Contract as ContractPrisma,
+  ContractDetails as ContractDetailsPrisma,
+} from 'generated/prisma/client';
 
 export class User implements UserType {
   constructor(
@@ -249,7 +254,7 @@ export class Contract {
   }
 
   addSupplement(
-    supplement: Omit<Supplement, 'id' | 'contractId' | 'Contract'>,
+    supplement: Omit<Supplement, 'id' | 'contractId' | 'Contract' | 'toObject'>,
   ) {
     if (!this._Supplements) this._Supplements = [];
     this._Supplements.push(
@@ -263,8 +268,60 @@ export class Contract {
     );
   }
 
+  toObject() {
+    return {
+      id: this._id,
+      agreementDate: this._agreementDate,
+      agreementNumber: this._agreementNumber,
+      clientCategory: this._clientCategory,
+      clientDenomination: this._clientDenomination,
+      clientName: this._clientName,
+      contractContainer: this._contractContainer,
+      contractDate: this._contractDate,
+      contractNumber: this._contractNumber,
+      contractType: this._contractType,
+      contractTypeId: this._contractTypeId,
+      contractValidity: this._contractValidity,
+      nationalityCompany: this._nationalityCompany,
+      observations: this._observations,
+      Supplements: this._Supplements?.map((s) => s.toObject()),
+      ContractDetails: this._ContractDetails?.toObject(),
+    } as ContractPrisma;
+  }
+
+  static fromPrisma(
+    contract: ContractPrisma & {
+      ContractDetails: ContractDetailsPrisma;
+      Supplements: SupplementPrisma[];
+    },
+  ) {
+    return new Contract(
+      contract.id,
+      contract.clientName,
+      contract.clientDenomination as ClientDenomination,
+      contract.clientCategory as ClientCategory,
+      contract.agreementNumber,
+      contract.agreementDate,
+      contract.nationalityCompany,
+      contract.contractTypeId,
+      contract.contractType as ContractType,
+      contract.contractContainer as ContractContainer,
+      contract.contractNumber,
+      contract.contractDate,
+      contract.contractValidity,
+      contract.observations,
+      contract.ContractDetails
+        ? ContractDetails.fromPrisma(contract.ContractDetails)
+        : undefined,
+      contract.Supplements?.map((s) => Supplement.fromPrisma(s)),
+    );
+  }
+
   addManySupplements(
-    supplements: Omit<Supplement, 'id' | 'contractId' | 'Contract'>[],
+    supplements: Omit<
+      Supplement,
+      'id' | 'contractId' | 'Contract' | 'toObject'
+    >[],
   ) {
     supplements.forEach((data) => this.addSupplement(data));
   }
@@ -331,6 +388,24 @@ export class ContractDetails {
   get Contract(): Contract[] | undefined {
     return this._Contract;
   }
+
+  toObject() {
+    return {
+      id: this._id,
+      name: this._name,
+      haveType: this._haveType,
+      haveContainer: this._haveContainer,
+    };
+  }
+
+  static fromPrisma(contractDetails: ContractDetailsPrisma) {
+    return new ContractDetails(
+      contractDetails.id,
+      contractDetails.name,
+      contractDetails.haveType,
+      contractDetails.haveContainer,
+    );
+  }
 }
 
 export class Supplement {
@@ -371,6 +446,28 @@ export class Supplement {
 
   get Contract(): Contract | undefined {
     return this._Contract;
+  }
+
+  toObject() {
+    return {
+      id: this._id,
+      supplementNumber: this._supplementNumber,
+      supplementDate: this._supplementDate,
+      supplementObject: this._supplementObject,
+      supplementValidity: this._supplementValidity,
+      contractId: this._contractId,
+    };
+  }
+
+  static fromPrisma(supplement: SupplementPrisma) {
+    return new Supplement(
+      supplement.id,
+      supplement.supplementNumber,
+      supplement.supplementDate,
+      supplement.supplementObject,
+      supplement.supplementValidity,
+      supplement.contractId,
+    );
   }
 
   static new(

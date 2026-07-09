@@ -13,6 +13,7 @@ import NotAuth from "./components/logic/not-auth"
 import UserDetails from "./pages/users/details"
 import Profile from "./pages/profile/profile"
 import Sessions from "./pages/profile/sessions"
+import ContractDetail from "./pages/contracts/details"
 
 export function App() {
   return (
@@ -40,6 +41,14 @@ export function App() {
             element={
               <IsAuth>
                 <ContractsList />
+              </IsAuth>
+            }
+          />
+          <Route
+            path="/contracts/:id"
+            element={
+              <IsAuth>
+                <ContractDetail />
               </IsAuth>
             }
           />

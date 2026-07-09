@@ -46,4 +46,10 @@ export default class ContractsController {
   deleteContract(@Param('id') id: string) {
     return this.ContractsService.deleteContract(id);
   }
+
+  @Roles([RoleType.OPERADOR, RoleType.CONSULTOR])
+  @Get(':id')
+  getById(@Param('id') id: string) {
+    return this.ContractsService.getById(id);
+  }
 }

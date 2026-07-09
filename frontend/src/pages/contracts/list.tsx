@@ -1,6 +1,6 @@
 import { Link } from "react-router"
 import Layout from "../layout"
-import { ArrowLeft, Hash, Plus, Search, Trash } from "lucide-react"
+import { ArrowLeft, Eye, Hash, Plus, Search, Trash } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import {
   Card,
@@ -140,11 +140,7 @@ export default function ContractsList() {
                       <TableHead className="font-semibold">
                         Vigencia de contrato
                       </TableHead>
-                      <ShowIf allow={["OPERADOR"]}>
-                        <TableHead className="font-semibold">
-                          Opciones
-                        </TableHead>
-                      </ShowIf>
+                      <TableHead className="font-semibold">Opciones</TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
@@ -184,8 +180,13 @@ export default function ContractsList() {
                         <TableCell>
                           {format(contract.contractValidity, "PPP")}
                         </TableCell>
-                        <ShowIf allow={["OPERADOR"]}>
-                          <TableCell>
+                        <TableCell>
+                          <Button asChild variant="ghost">
+                            <Link to={`/contracts/${contract.id}`}>
+                              <Eye />
+                            </Link>
+                          </Button>
+                          <ShowIf allow={["OPERADOR"]}>
                             <AlertDialog>
                               <AlertDialogTrigger asChild>
                                 <Button
@@ -216,8 +217,8 @@ export default function ContractsList() {
                                 </AlertDialogFooter>
                               </AlertDialogContent>
                             </AlertDialog>
-                          </TableCell>
-                        </ShowIf>
+                          </ShowIf>
+                        </TableCell>
                       </TableRow>
                     ))}
                   </TableBody>
