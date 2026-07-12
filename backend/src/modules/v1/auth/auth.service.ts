@@ -68,6 +68,16 @@ export default class AuthService {
       });
   }
 
+  deleteSession(id: string) {
+    return this.AuthRepository.deleteSessionById(id)
+      .then(() => ({
+        message: 'Sesión eliminada correctamente',
+      }))
+      .catch((err) => {
+        throw err;
+      });
+  }
+
   logout(sid: string) {
     return this.AuthRepository.deleteSessionById(sid);
   }

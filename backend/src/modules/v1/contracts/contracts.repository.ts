@@ -118,7 +118,7 @@ export default class ContractsRepository {
       where,
       skip: (page - 1) * pageSize,
       take: pageSize,
-      include: { Supplements: true, ContractDetails: true },
+      include: { ContractDetails: true },
       orderBy: { contractDate: 'desc' },
     });
     return { totalPages, totalItems, results, page };

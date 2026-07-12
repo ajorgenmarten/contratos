@@ -1,8 +1,10 @@
 import {
+  BadRequestException,
   Body,
   Controller,
   Delete,
   Get,
+  Param,
   Post,
   Put,
   Req,
@@ -16,6 +18,7 @@ import SessionGuard from '../commons/guards/session.guard';
 import ChangePasswordDto from './dto/change-password.dto';
 import AuthGuard from '../commons/guards/auth.guard';
 import { User } from '../commons/types/models.classes';
+import { isUUID } from 'class-validator';
 
 @Controller('v1/auth')
 export default class AuthController {
@@ -62,5 +65,13 @@ export default class AuthController {
   @Get('my-sessions')
   mySessions(@Req() request: Request) {
     return this.AuthService.getMySessions((request.user as User).id);
+  }
+
+  @UseGuards(SessionGuard, AuthGuard)
+  @Delete('session/:id')
+  deleteSession(@Param('id') id: string) {
+    if (!id || !isUUID(id))
+      throw new BadRequestException('El id de sesión es incorrecto');
+    return this.AuthService.deleteSession(id);
   }
 }

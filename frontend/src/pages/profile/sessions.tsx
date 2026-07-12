@@ -19,9 +19,19 @@ import {
 import useSessions from "./hooks/use-sessions"
 import { format } from "date-fns"
 import { Button } from "@/components/ui/button"
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog"
 
 export default function Sessions() {
-  const { sessions } = useSessions()
+  const { sessions, deleteSession } = useSessions()
   return (
     <Layout>
       <div className="min-h-[calc(100vh-8rem)] bg-muted/30 px-4 py-8">
@@ -65,12 +75,34 @@ export default function Sessions() {
                         <TableCell>{s.id}</TableCell>
                         <TableCell>{format(s.createdAt, "PPP")}</TableCell>
                         <TableCell>
-                          <Button
-                            variant="ghost"
-                            className="hover:text-rose-400"
-                          >
-                            <Trash />
-                          </Button>
+                          <AlertDialog>
+                            <AlertDialogTrigger asChild>
+                              <Button
+                                variant="ghost"
+                                className="text-destructive/40 hover:text-destructive"
+                              >
+                                <Trash />
+                              </Button>
+                            </AlertDialogTrigger>
+                            <AlertDialogContent>
+                              <AlertDialogTitle>
+                                ¿Estás seguro que deseas eliminar esta sesión?
+                              </AlertDialogTitle>
+                              <AlertDialogDescription>
+                                Si elimina esta sesión, tendrá que volver a
+                                iniciar sesión en el equipo que la estaba usando
+                              </AlertDialogDescription>
+                              <AlertDialogFooter>
+                                <AlertDialogCancel>Cancelar</AlertDialogCancel>
+                                <AlertDialogAction
+                                  variant="destructive"
+                                  onClick={() => deleteSession(s.id)}
+                                >
+                                  Borrar
+                                </AlertDialogAction>
+                              </AlertDialogFooter>
+                            </AlertDialogContent>
+                          </AlertDialog>
                         </TableCell>
                       </TableRow>
                     ))}

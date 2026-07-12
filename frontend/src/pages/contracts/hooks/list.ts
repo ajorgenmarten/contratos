@@ -35,9 +35,11 @@ export default function useList() {
     ])
     const params = new URLSearchParams(objects)
     const response = await http.get("/v1/contracts", { params: params })
-    setTotalItems(response.data.totalItems)
-    setTotalPages(response.data.totalPages)
-    setContracts(response.data.results)
+    if (response && response.data) {
+      setTotalItems(response.data.totalItems)
+      setTotalPages(response.data.totalPages)
+      setContracts(response.data.results)
+    }
   }, [getValues])
 
   const deleteContract = useCallback(
