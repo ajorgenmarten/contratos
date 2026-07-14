@@ -125,7 +125,7 @@ export default function UsersAdd() {
                 </div>
 
                 <div className="flex gap-2 space-y-2">
-                  <Button>
+                  <Button disabled={formState.isSubmitting || !formState.isValid}>
                     <Plus /> Agregar usuario
                   </Button>
                   <Button

@@ -54,7 +54,7 @@ export default function Login() {
               <SpanError errors={formState.errors} errorField="password" />
             </div>
             <CardAction>
-              <Button>
+              <Button disabled={formState.isSubmitting || !formState.isValid}>
                 Entrar <ArrowRight />
               </Button>
             </CardAction>

@@ -19,6 +19,7 @@ async function bootstrap() {
     }),
   );
   const config = new DocumentBuilder()
+    .addBearerAuth()
     .setTitle('Contratos ENETEC')
     .setDescription('Documentación de la API para la gestión de contratos')
     .setVersion('1.0.0')
