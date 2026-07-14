@@ -1,107 +1,113 @@
 import { BrowserRouter, Route, Routes } from "react-router"
 import { ToastContainer } from "react-toastify"
-import Home from "./pages/home/home"
-import ContractAdd from "./pages/contracts/add"
-import NotFound from "./pages/not-found/not-found"
-import ContractsList from "./pages/contracts/list"
-import UsersAdd from "./pages/users/add"
-import UserList from "./pages/users/list"
-import Login from "./pages/login/login"
 import AuthProvider from "./contexts/auth/auth.provider"
-import IsAuth from "./components/logic/is-auth"
-import NotAuth from "./components/logic/not-auth"
-import UserDetails from "./pages/users/details"
-import Profile from "./pages/profile/profile"
-import Sessions from "./pages/profile/sessions"
-import ContractDetail from "./pages/contracts/details"
+
+import { lazy, Suspense } from "react"
+import Fallback from "./components/custom/fallback"
+
+const IsAuth = lazy(() => import("./components/logic/is-auth"))
+const NotAuth = lazy(() => import("./components/logic/not-auth"))
+const Home = lazy(() => import("./pages/home/home"))
+const Login = lazy(() => import("./pages/login/login"))
+const ContractAdd = lazy(() => import("./pages/contracts/add"))
+const ContractsList = lazy(() => import("./pages/contracts/list"))
+const NotFound = lazy(() => import("./pages/not-found/not-found"))
+const UsersAdd = lazy(() => import("./pages/users/add"))
+const UserList = lazy(() => import("./pages/users/list"))
+const UserDetails = lazy(() => import("./pages/users/details"))
+const Profile = lazy(() => import("./pages/profile/profile"))
+const Sessions = lazy(() => import("./pages/profile/sessions"))
+const ContractDetail = lazy(() => import("./pages/contracts/details"))
 
 export function App() {
   return (
     <AuthProvider>
       <BrowserRouter>
-        <Routes>
-          <Route
-            path="/"
-            element={
-              <IsAuth>
-                <Home />
-              </IsAuth>
-            }
-          />
-          <Route
-            path="/login"
-            element={
-              <NotAuth>
-                <Login />
-              </NotAuth>
-            }
-          />
-          <Route
-            path="/contracts"
-            element={
-              <IsAuth>
-                <ContractsList />
-              </IsAuth>
-            }
-          />
-          <Route
-            path="/contracts/:id"
-            element={
-              <IsAuth>
-                <ContractDetail />
-              </IsAuth>
-            }
-          />
-          <Route
-            path="/contracts/add"
-            element={
-              <IsAuth>
-                <ContractAdd />
-              </IsAuth>
-            }
-          />
-          <Route
-            path="/users"
-            element={
-              <IsAuth>
-                <UserList />
-              </IsAuth>
-            }
-          />
-          <Route
-            path="/users/add"
-            element={
-              <IsAuth>
-                <UsersAdd />
-              </IsAuth>
-            }
-          />
-          <Route
-            path="/users/:id"
-            element={
-              <IsAuth>
-                <UserDetails />
-              </IsAuth>
-            }
-          />
-          <Route
-            path="/profile"
-            element={
-              <IsAuth>
-                <Profile />
-              </IsAuth>
-            }
-          />
-          <Route
-            path="/profile/sessions"
-            element={
-              <IsAuth>
-                <Sessions />
-              </IsAuth>
-            }
-          />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
+        <Suspense fallback={<Fallback />}>
+          <Routes>
+            <Route
+              path="/"
+              element={
+                <IsAuth>
+                  <Home />
+                </IsAuth>
+              }
+            />
+            <Route
+              path="/login"
+              element={
+                <NotAuth>
+                  <Login />
+                </NotAuth>
+              }
+            />
+            <Route
+              path="/contracts"
+              element={
+                <IsAuth>
+                  <ContractsList />
+                </IsAuth>
+              }
+            />
+            <Route
+              path="/contracts/:id"
+              element={
+                <IsAuth>
+                  <ContractDetail />
+                </IsAuth>
+              }
+            />
+            <Route
+              path="/contracts/add"
+              element={
+                <IsAuth>
+                  <ContractAdd />
+                </IsAuth>
+              }
+            />
+            <Route
+              path="/users"
+              element={
+                <IsAuth>
+                  <UserList />
+                </IsAuth>
+              }
+            />
+            <Route
+              path="/users/add"
+              element={
+                <IsAuth>
+                  <UsersAdd />
+                </IsAuth>
+              }
+            />
+            <Route
+              path="/users/:id"
+              element={
+                <IsAuth>
+                  <UserDetails />
+                </IsAuth>
+              }
+            />
+            <Route
+              path="/profile"
+              element={
+                <IsAuth>
+                  <Profile />
+                </IsAuth>
+              }
+            />
+            <Route
+              path="/profile/sessions"
+              element={
+                <IsAuth>
+                  <Sessions />
+                </IsAuth>
+              }
+            />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </Suspense>
         <ToastContainer />
       </BrowserRouter>
     </AuthProvider>

@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.0.1",
   "type": "module",
-  "license":"MIT",
+  "license": "MIT",
   "author": {
     "email": "ajorgenmarten35@gmail.com",
     "name": "Alejandro Jorgen Martén",
@@ -12,7 +12,7 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
-    "build:ignore": "tsc -b --noEmit false || vite build",
+    "build:ignore": "tsc --noEmit && vite build",
     "lint": "eslint .",
     "format": "prettier --write \"**/*.{ts,tsx}\"",
     "typecheck": "tsc --noEmit",
