@@ -34,6 +34,8 @@ RUN corepack enable pnpm
 
 RUN pnpm install --frozen-lockfile --ignore-scripts --prod
 
+RUN sed  -i 's/\r$//' ./entrypoint.sh
+
 RUN chmod +x ./entrypoint.sh
 
 ENTRYPOINT [ "./entrypoint.sh" ]
