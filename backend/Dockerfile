@@ -26,10 +26,14 @@ COPY --from=BUILD /home/node/app/prisma ./prisma
 
 COPY --from=BUILD /home/node/app/prisma.config.ts .
 
+COPY --from=BUILD /home/node/app/entirypoint.sh .
+
 COPY pnpm-lock.yaml package.json pnpm-workspace.yaml .
 
 RUN corepack enable pnpm
 
 RUN pnpm install --frozen-lockfile --ignore-scripts --prod
 
-CMD [ "node", "src/main.js" ]
+RUN chmod +x ./entrypoint.sh
+
+ENTRYPOINT [ "./entirypoint.sh" ]
